@@ -8,9 +8,37 @@ namespace DungeonStats
         private static void Main(string[] args)
         {
             int damageInt = int.Parse(args[0]);
-            int defenseInt = int.Parse(args[1]);
 
-            Console.WriteLine(Damage(damageInt,defenseInt));
+            if(args.Length < 2)
+            {
+
+                var table = new Table();
+
+                table.AddColumn("Operation");
+                table.AddColumn("Result");
+
+                table.AddRow($"Damage({Damage(damageInt)})");
+                table.AddRow($"Damage({Damage(damageInt,2)})");
+                table.AddRow($"CriticalHit({CriticalHit(damageInt)})");
+
+                Console.WriteLine(table);
+            }
+            else
+            {
+                int defenseInt = int.Parse(args[1]);
+
+                var table = new Table();
+
+                table.AddColumn("Operation");
+                table.AddColumn("Result");
+
+                table.AddRow($"Damage({Damage(damageInt)})");
+                table.AddRow($"Damage({Damage(damageInt,defenseInt)})");
+                table.AddRow($"CriticalHit({CriticalHit(damageInt)})");
+
+                Console.WriteLine(table);
+            }
+            
         }
 
         private static int Damage(int attack, int defense)
@@ -33,13 +61,14 @@ namespace DungeonStats
         private static int CriticalHit(int damage)
         {
             int crit = 0;
+
             if(damage <= 0)
             {
                 return 0;
             }
             else
             {
-                crit = 1 - Damage(damage);
+                crit = 1 + Damage(damage);
             }
             return crit;
         }
